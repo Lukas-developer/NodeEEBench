@@ -20,7 +20,7 @@ Play with waveform generator and oscilloscope.
 # Status
 
 The current non responsive GUI is shown here:
-https://htmlpreview.github.io/?https://github.com/JVollrath/NodeEEBench/blob/master/Projekte/NEEBench.html
+[GUI]https://htmlpreview.github.io/?https://github.com/JVollrath/NodeEEBench/blob/master/Projekte/NEEBench.html
 
 ![System block diagram](ImagesS/System_V04.png "System Block diagram")
 
@@ -37,9 +37,7 @@ Subdirectory Xilinx contains the bit file and all sources for the BASYS3 Board.
 Subdirectory Arduino contains sketches for Arduino Maker WiFi 1010 and R2R DAC and Serial C DAC.
 
 More documentation can be found at:
-BASYS3 FPGA: [2023 Research Summary] 
-(https://personalpages.hs-kempten.de/~vollratj/Projekte/2023_ResearchSummary.html).
+BASYS3 FPGA: [2023 Research Summary](https://personalpages.hs-kempten.de/~vollratj/Projekte/2023_ResearchSummary.html).
 
-Arduino: [2023 Interface Electronics Laboratory DAC Investigation] 
-(https://personalpages.hs-kempten.de/~vollratj/InEl/2023_Lab_MKRWIFI1010_R2R.html)
+Arduino: [2023 Interface Electronics Laboratory DAC Investigation](https://personalpages.hs-kempten.de/~vollratj/InEl/2023_Lab_MKRWIFI1010_R2R.html)
 
