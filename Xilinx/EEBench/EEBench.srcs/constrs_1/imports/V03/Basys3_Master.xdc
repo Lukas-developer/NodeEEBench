@@ -171,10 +171,10 @@ set_property IOSTANDARD LVCMOS33 [get_ports {JB[7]}]
 
 #PMOD JA
 #JA
-set_property PACKAGE_PIN J1 [get_ports {JA[0]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {JA[0]}]
-set_property PACKAGE_PIN L2 [get_ports {JA[1]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {JA[1]}]
+set_property PACKAGE_PIN J1 [get_ports SCL]
+set_property IOSTANDARD LVCMOS33 [get_ports SCL]
+set_property PACKAGE_PIN L2 [get_ports SDA]
+set_property IOSTANDARD LVCMOS33 [get_ports SDA]
 set_property PACKAGE_PIN J2 [get_ports {JA[2]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {JA[2]}]
 set_property PACKAGE_PIN G2 [get_ports {JA[3]}]

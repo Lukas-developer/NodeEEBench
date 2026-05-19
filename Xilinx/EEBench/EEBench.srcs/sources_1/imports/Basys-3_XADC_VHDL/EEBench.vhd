@@ -34,11 +34,13 @@ entity EEBench is
            TX    		: out  STD_LOGIC;                      -- UART TX
            LED 			: out  STD_LOGIC_VECTOR (15 downto 0); -- 16 LEDs next to switches 
            JXA 			: in   STD_LOGIC_VECTOR (7 downto 0);  -- Analog Diff Inputs
-           JA 			: out  STD_LOGIC_VECTOR (7 downto 0);  -- PMOD lower 8bit DAC
+           JA 			: out  STD_LOGIC_VECTOR (7 downto 2);  -- PMOD lower 8bit DAC
            JB 			: out  STD_LOGIC_VECTOR (7 downto 0);  -- PMOD lower 8bit DAC
            JC 			: out  STD_LOGIC_VECTOR (7 downto 0);  -- PMOD upper 8bit DAC
            SSEG_CA 		: out  STD_LOGIC_VECTOR (7 downto 0);  -- 7 segment + dp
-           SSEG_AN 		: out  STD_LOGIC_VECTOR (3 downto 0)   -- 4 digits 
+           SSEG_AN 		: out  STD_LOGIC_VECTOR (3 downto 0);   -- 4 digits 
+           SCL          : inout STD_LOGIC;
+           SDA          : inout STD_LOGIC
 			  );
 end EEBench;
 
@@ -142,6 +144,27 @@ COMPONENT uart_mem
    );
 end COMPONENT;
 
+-- I2C 
+COMPONENT i2c_master
+generic(
+    input_clk : integer := 100_000_000;
+    bus_clk   : integer := 400_000
+);
+port(
+    clk       : in std_logic;
+    reset_n   : in std_logic;
+    ena       : in std_logic;
+    addr      : in std_logic_vector(6 downto 0);
+    rw        : in std_logic;
+    data_wr   : in std_logic_vector(7 downto 0);
+    busy      : out std_logic;
+    data_rd   : out std_logic_vector(7 downto 0);
+    ack_error : buffer std_logic;
+    sda       : inout std_logic;
+    scl       : inout std_logic
+);
+end COMPONENT;
+
 COMPONENT tri_counter
    generic(
       N: integer := 16     -- number of bits
@@ -197,6 +220,7 @@ signal channel_out: STD_LOGIC_VECTOR(4 DOWNTO 0); -- not used
 signal alarm_out: STD_LOGIC;                      -- not used
 signal eos_out: STD_LOGIC;                      -- not used
 signal busy_out: STD_LOGIC;                      -- not used
+signal debugbus: STD_LOGIC_VECTOR(5 DOWNTO 0);
 
 -- Multiplexing of inputs to 4 digit 7 segment display
 signal source: STD_LOGIC_VECTOR(2 DOWNTO 0);
@@ -210,6 +234,19 @@ signal dpX: STD_LOGIC_VECTOR(3 DOWNTO 0);
    signal tx_l: std_logic;
    signal tx_en: std_logic;
    signal xtick: std_logic_vector( 9 downto 0);
+   
+-- I2C signals
+signal ena_sig      : std_logic;
+signal addr_sig     : std_logic_vector(6 downto 0) := "1010000";
+signal rw_sig       : std_logic := '0';
+signal data_wr_sig  : std_logic_vector(7 downto 0) := x"55";
+signal data_rd_sig  : std_logic_vector(7 downto 0);
+signal busy_sig     : std_logic;
+signal ack_err_sig  : std_logic;
+signal reset_n_sig  : std_logic;
+type i2c_state_type is (idle, start, done);
+signal i2c_state : i2c_state_type := idle;
+signal old_btn   : std_logic := '0';
 
 -- Register Memory for UART
 signal rMem: std_logic_vector(511 downto 0) := (others=>'0');
@@ -317,9 +354,9 @@ myLut2: One_port_ram
 ----------------------------------------------------------
 
 with BTN(3) select -- BTND
-	LED <= SW   when '0',
-		   data when others;
---		   "0000000000000000" when others;
+	LED(15 DOWNTO 2) <= SW(15 DOWNTO 2)   when '0',
+		   data(15 DOWNTO 2) when others;
+--		   "00000000000000" when others;
 			 			 
 ----------------------------------------------------------
 ------    Switches to PMOD JB,JC                   -------
@@ -403,7 +440,8 @@ with source select
 	            "0011111"	when "100",  -- Hex1f
 			    "0010110" when others;
 
-JA <=	din(15 downto 12) & tx_busy & we & daddr_in(3) & daddr_in(0); 			 
+debugbus <=	din(15 downto 12) & tx_busy & we; 
+--& daddr_in(3) & daddr_in(0); 			 
 
 readyX <= ready;    -- Simulation create ADC ready with EN_16:  or EN_16;
 
@@ -538,6 +576,78 @@ my_adc : XADC_EE
       TX => TX,
       tx_busy => tx_busy -- sending data?
    );
+
+
+----------------------------------------------------------
+------                 I2C                   -------
+----------------------------------------------------------
+-- reset_n_sig <= not xrst;
+reset_n_sig <= '1';
+-- Instance of I2C master
+i2c_unit: i2c_master
+   generic map(
+      input_clk => 100_000_000,
+      bus_clk   => 400_000
+      )
+   port map(
+      clk => CLK,
+      reset_n => reset_n_sig,
+      ena => ena_sig,
+      addr => addr_sig,
+      rw => rw_sig,
+      data_wr => data_wr_sig,
+      busy => busy_sig,
+      data_rd => data_rd_sig,
+      ack_error => ack_err_sig,
+      sda => SDA,
+      scl => SCL
+   );
+   
+   process(CLK)
+    begin
+        if rising_edge(CLK) then
+
+            case i2c_state is
+
+                ------------------------------------------------
+                when idle =>
+
+                    ena_sig <= '0';
+
+                    if BTN(0) = '1' and old_btn = '0' then
+                        i2c_state <= start;
+                    end if;
+
+              ------------------------------------------------
+                when start =>
+
+                    ena_sig <= '1';
+
+                -- warten bis I2C wirklich startet
+                    if busy_sig = '1' then
+                        ena_sig <= '0';
+                        i2c_state <= done;
+                    end if;
+
+            ------------------------------------------------
+                when done =>
+
+                -- warten bis Transfer fertig
+                    if busy_sig = '0' then
+                        i2c_state <= idle;
+                    end if;
+
+            end case;
+
+            old_btn <= BTN(0);
+
+        end if;
+    end process;
+   
+
+    -- Debug LEDs
+    LED(0) <= busy_sig;
+    LED(1) <= ack_err_sig;
 
 
 ----------------------------------------------------------

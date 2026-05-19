@@ -1,0 +1,2 @@
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'i2c_master_tb'
