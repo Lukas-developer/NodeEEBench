@@ -237,16 +237,29 @@ signal dpX: STD_LOGIC_VECTOR(3 DOWNTO 0);
    
 -- I2C signals
 signal ena_sig      : std_logic;
-signal addr_sig     : std_logic_vector(6 downto 0) := "1010000";
+signal addr_sig     : std_logic_vector(6 downto 0) := "1100000";
 signal rw_sig       : std_logic := '0';
 signal data_wr_sig  : std_logic_vector(7 downto 0) := x"55";
 signal data_rd_sig  : std_logic_vector(7 downto 0);
 signal busy_sig     : std_logic;
 signal ack_err_sig  : std_logic;
 signal reset_n_sig  : std_logic;
-type i2c_state_type is (idle, start, done);
+type i2c_state_type is (
+    idle,
+    send_byte1,
+    wait_byte1,
+    send_byte2,
+    wait_byte2,
+    done
+);
 signal i2c_state : i2c_state_type := idle;
-signal old_btn   : std_logic := '0';
+signal i2c_tick      : std_logic := '0';
+signal i2c_cnt       : integer range 0 to 99999 := 0;
+signal dac_value : unsigned(11 downto 0) := to_unsigned(2048,12);
+
+signal mcp_byte1 : std_logic_vector(7 downto 0) := x"08";
+signal mcp_byte2 : std_logic_vector(7 downto 0) := x"00";
+
 
 -- Register Memory for UART
 signal rMem: std_logic_vector(511 downto 0) := (others=>'0');
@@ -602,6 +615,20 @@ i2c_unit: i2c_master
       sda => SDA,
       scl => SCL
    );
+   process(CLK)
+   begin
+      if rising_edge(CLK) then
+
+         if i2c_cnt = 99999 then
+             i2c_cnt  <= 0;
+             i2c_tick <= '1';
+         else
+             i2c_cnt  <= i2c_cnt + 1;
+             i2c_tick <= '0';
+          end if;
+
+      end if;
+   end process;
    
    process(CLK)
     begin
@@ -612,22 +639,70 @@ i2c_unit: i2c_master
                 ------------------------------------------------
                 when idle =>
 
-                    ena_sig <= '0';
+                   ena_sig <= '0';
 
-                    if BTN(0) = '1' and old_btn = '0' then
-                        i2c_state <= start;
-                    end if;
+                   if i2c_tick = '1' then
+
+                      data_wr_sig <= mcp_byte1;
+
+                      i2c_state <= send_byte1;
+
+                end if;
+                --when idle =>
+
+                --    ena_sig <= '0';
+
+                --    if i2c_tick = '1' then
+                --       i2c_state <= start;
+                --    end if;
 
               ------------------------------------------------
-                when start =>
+                when send_byte1 =>
 
-                    ena_sig <= '1';
+                   ena_sig <= '1';
+
+                   if busy_sig = '1' then
+
+                      ena_sig <= '0';
+
+                      i2c_state <= wait_byte1;
+
+                   end if;
+                     
+                when wait_byte1 =>
+
+                   data_wr_sig <= mcp_byte2;
+
+                   ena_sig <= '1';
+
+                   i2c_state <= send_byte2;
+                   
+                when send_byte2 =>
+
+                   if busy_sig = '1' then
+
+                      ena_sig <= '0';
+
+                      i2c_state <= wait_byte2;
+
+                   end if;
+                   
+                when wait_byte2 =>
+
+                   if busy_sig = '0' then
+
+                      i2c_state <= done;
+
+                   end if;
+                --when start =>
+
+                --    ena_sig <= '1';
 
                 -- warten bis I2C wirklich startet
-                    if busy_sig = '1' then
-                        ena_sig <= '0';
-                        i2c_state <= done;
-                    end if;
+                --    if busy_sig = '1' then
+                --        ena_sig <= '0';
+                --        i2c_state <= done;
+                --    end if;
 
             ------------------------------------------------
                 when done =>
@@ -639,7 +714,6 @@ i2c_unit: i2c_master
 
             end case;
 
-            old_btn <= BTN(0);
 
         end if;
     end process;

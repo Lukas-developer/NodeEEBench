@@ -24,6 +24,8 @@ signal ack_error_tb : std_logic;
 signal sda_tb : std_logic := 'Z';
 signal scl_tb : std_logic := 'Z';
 
+signal sda_prev : std_logic := '1';
+
 -- Slave Daten
 constant slave_data : std_logic_vector(7 downto 0) := "11001100";
 
@@ -81,91 +83,158 @@ port map(
 ------------------------------------------------
 -- I2C SLAVE FSM
 ------------------------------------------------
-process(scl_tb)
+process(scl_tb, sda_tb)
 begin
 
-    --------------------------------------------
-    -- Rising Edge: Sampling
-    --------------------------------------------
-    if rising_edge(scl_tb) then
+    ------------------------------------------------
+    -- START erkennen
+    ------------------------------------------------
+    if (sda_prev = '1' and sda_tb = '0' and scl_tb = '1') then
+
+        report "START";
+
+        state <= ADDR;
+        bit_cnt <= 7;
+
+    ------------------------------------------------
+    -- STOP erkennen
+    ------------------------------------------------
+    elsif (sda_prev = '0' and sda_tb = '1' and scl_tb = '1') then
+
+        report "STOP";
+
+        state <= IDLE;
+        sda_slave_drive <= 'Z';
+
+    ------------------------------------------------
+    -- Rising Edge SCL = Daten einlesen
+    ------------------------------------------------
+    elsif rising_edge(scl_tb) then
 
         case state is
 
+            ------------------------------------------------
             when IDLE =>
-                if busy_tb = '1' then
-                    state   <= ADDR;
-                    bit_cnt <= 7;
-                end if;
+                null;
 
+            ------------------------------------------------
             when ADDR =>
+
                 shift_reg(bit_cnt) <= sda_tb;
 
                 if bit_cnt = 0 then
+
+                    report "ADDRESS RECEIVED";
+
                     state <= ACK_ADDR;
+
                 else
+
                     bit_cnt <= bit_cnt - 1;
+
                 end if;
 
+            ------------------------------------------------
             when WRITE_DATA =>
+
                 shift_reg(bit_cnt) <= sda_tb;
 
                 if bit_cnt = 0 then
+
+                    report "WRITE BYTE RECEIVED";
+
                     state <= ACK_DATA;
+
                 else
+
                     bit_cnt <= bit_cnt - 1;
+
                 end if;
 
+            ------------------------------------------------
             when READ_DATA =>
+
                 if bit_cnt = 0 then
+
                     state <= ACK_DATA;
+
                 else
+
                     bit_cnt <= bit_cnt - 1;
+
                 end if;
 
+            ------------------------------------------------
             when ACK_ADDR =>
                 null;
 
+            ------------------------------------------------
             when ACK_DATA =>
+
+                report "DATA PHASE COMPLETE";
+
                 state <= IDLE;
 
         end case;
 
-    --------------------------------------------
-    -- Falling Edge: Driving SDA
-    --------------------------------------------
+    ------------------------------------------------
+    -- Falling Edge SCL = SDA treiben
+    ------------------------------------------------
     elsif falling_edge(scl_tb) then
 
         case state is
 
+            ------------------------------------------------
             when IDLE =>
+
                 sda_slave_drive <= 'Z';
 
+            ------------------------------------------------
             when ADDR =>
+
                 sda_slave_drive <= 'Z';
 
+            ------------------------------------------------
             when ACK_ADDR =>
-                sda_slave_drive <= '0';  -- ACK
 
-                if rw_tb = '1' then
-                    state   <= READ_DATA;
-                else
-                    state   <= WRITE_DATA;
-                end if;
+                report "ACK ADDRESS";
+
+                sda_slave_drive <= '0';
 
                 bit_cnt <= 7;
 
+                if shift_reg(0) = '1' then
+                    state <= READ_DATA;
+                else
+                    state <= WRITE_DATA;
+                end if;
+
+            ------------------------------------------------
             when WRITE_DATA =>
+
                 sda_slave_drive <= 'Z';
 
+            ------------------------------------------------
             when READ_DATA =>
-                sda_slave_drive <= slave_data(bit_cnt);
 
+                if slave_data(bit_cnt) = '0' then
+                    sda_slave_drive <= '0';
+                else
+                    sda_slave_drive <= 'Z';
+                end if;
+
+            ------------------------------------------------
             when ACK_DATA =>
-                sda_slave_drive <= '0';  -- ACK
+
+                report "ACK DATA";
+
+                sda_slave_drive <= '0';
 
         end case;
 
     end if;
+
+    sda_prev <= sda_tb;
 
 end process;
 
@@ -175,36 +244,56 @@ end process;
 process
 begin
 
-    -- Reset
     reset_n_tb <= '0';
     wait for 100 ns;
+
     reset_n_tb <= '1';
     wait for 100 ns;
 
-    --------------------------------
+    ------------------------------------------------
     -- WRITE
-    --------------------------------
-    rw_tb  <= '0';
+    ------------------------------------------------
+    report "WRITE TEST START";
+
+    rw_tb      <= '0';
+    data_wr_tb <= x"99";
+
     ena_tb <= '1';
-    wait for 2 us;
+
+    wait until busy_tb = '1';
+
     ena_tb <= '0';
 
     wait until busy_tb = '0';
-    wait for 2 us;
 
-    --------------------------------
+    report "WRITE TEST DONE";
+
+    wait for 5 us;
+
+    ------------------------------------------------
     -- READ
-    --------------------------------
-    rw_tb  <= '1';
+    ------------------------------------------------
+    report "READ TEST START";
+
+    rw_tb <= '1';
+
     ena_tb <= '1';
-    wait for 2 us;
+
+    wait until busy_tb = '1';
+
     ena_tb <= '0';
 
     wait until busy_tb = '0';
-    wait for 10 us;
+
+    report "READ TEST DONE";
+
+    assert data_rd_tb = x"CC"
+    report "READ DATA WRONG"
+    severity error;
+
+    report "SIMULATION PASSED";
 
     wait;
 
 end process;
-
 end sim;

@@ -1,140 +1,40 @@
 <?xml version="1.0"?>
 <ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="30760" HostCore="20" HostMemory="033854128128">
+    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="23684" HostCore="20" HostMemory="033854128128">
     </Process>
 </ProcessHandle>
 <?xml version="1.0"?>
 <ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="37816" HostCore="20" HostMemory="033854128128">
+    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="35404" HostCore="20" HostMemory="033854128128">
     </Process>
 </ProcessHandle>
 <?xml version="1.0"?>
 <ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="16284" HostCore="20" HostMemory="033854128128">
+    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="36756" HostCore="20" HostMemory="033854128128">
     </Process>
 </ProcessHandle>
 <?xml version="1.0"?>
 <ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="6756" HostCore="20" HostMemory="033854128128">
+    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="1952" HostCore="20" HostMemory="033854128128">
     </Process>
 </ProcessHandle>
 <?xml version="1.0"?>
 <ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="21656" HostCore="20" HostMemory="033854128128">
+    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="32232" HostCore="20" HostMemory="033854128128">
     </Process>
 </ProcessHandle>
 <?xml version="1.0"?>
 <ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="20336" HostCore="20" HostMemory="033854128128">
+    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="11300" HostCore="20" HostMemory="033854128128">
     </Process>
 </ProcessHandle>
 <?xml version="1.0"?>
 <ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="10952" HostCore="20" HostMemory="033854128128">
+    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="30388" HostCore="20" HostMemory="033854128128">
     </Process>
 </ProcessHandle>
 <?xml version="1.0"?>
 <ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="37976" HostCore="20" HostMemory="033854128128">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="35020" HostCore="20" HostMemory="033854128128">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="36252" HostCore="20" HostMemory="033854128128">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="18040" HostCore="20" HostMemory="033854128128">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="23932" HostCore="20" HostMemory="033854128128">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="9816" HostCore="20" HostMemory="033854128128">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="25356" HostCore="20" HostMemory="033854128128">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="13472" HostCore="20" HostMemory="033854128128">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="28128" HostCore="20" HostMemory="033854128128">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="27952" HostCore="20" HostMemory="033854128128">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="30548" HostCore="20" HostMemory="033854128128">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="20868" HostCore="20" HostMemory="033854128128">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="12604" HostCore="20" HostMemory="033854128128">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="8724" HostCore="20" HostMemory="033854128128">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="48012" HostCore="20" HostMemory="033854128128">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="27816" HostCore="20" HostMemory="033854128128">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="45528" HostCore="20" HostMemory="033854128128">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="28020" HostCore="20" HostMemory="033854128128">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="48200" HostCore="20" HostMemory="033854128128">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="9580" HostCore="20" HostMemory="033854128128">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="26988" HostCore="20" HostMemory="033854128128">
+    <Process Command="vivado.bat" Owner="lukas" Host="LKLENOVO" Pid="38804" HostCore="20" HostMemory="033854128128">
     </Process>
 </ProcessHandle>

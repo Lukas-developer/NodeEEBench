@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1779198197">
+<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1780410322">
   <File Type="PA-TCL" Name="EEBench.tcl"/>
-  <File Type="RDS-PROPCONSTRS" Name="EEBench_drc_synth.rpt"/>
   <File Type="REPORTS-TCL" Name="EEBench_reports.tcl"/>
   <File Type="RDS-RDS" Name="EEBench.vds"/>
   <File Type="RDS-UTIL" Name="EEBench_utilization_synth.rpt"/>
   <File Type="RDS-UTIL-PB" Name="EEBench_utilization_synth.pb"/>
   <File Type="RDS-DCP" Name="EEBench.dcp"/>
-  <File Type="VDS-TIMINGSUMMARY" Name="EEBench_timing_summary_synth.rpt"/>
-  <File Type="VDS-TIMING-PB" Name="EEBench_timing_summary_synth.pb"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PSRCDIR/sources_1/imports/Basys-3_XADC_VHDL/ButtonD.vhd">
