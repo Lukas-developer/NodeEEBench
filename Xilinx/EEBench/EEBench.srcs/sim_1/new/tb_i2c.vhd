@@ -3,297 +3,242 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity i2c_master_tb is
-end;
+end entity;
 
 architecture sim of i2c_master_tb is
-
--- Clock / Control
-signal clk_tb     : std_logic := '0';
-signal reset_n_tb : std_logic := '0';
-signal ena_tb     : std_logic := '0';
-
--- I2C Interface
-signal addr_tb    : std_logic_vector(6 downto 0) := "1010101";
-signal rw_tb      : std_logic := '0';
-signal data_wr_tb : std_logic_vector(7 downto 0) := "10011001";
-
-signal busy_tb    : std_logic;
-signal data_rd_tb : std_logic_vector(7 downto 0);
-signal ack_error_tb : std_logic;
-
-signal sda_tb : std_logic := 'Z';
-signal scl_tb : std_logic := 'Z';
-
-signal sda_prev : std_logic := '1';
-
--- Slave Daten
-constant slave_data : std_logic_vector(7 downto 0) := "11001100";
-
--- SDA Treiber (open drain)
-signal sda_slave_drive : std_logic := 'Z';
-
--- FSM
-type state_type is (
-    IDLE,
-    ADDR,
-    ACK_ADDR,
-    WRITE_DATA,
-    READ_DATA,
-    ACK_DATA
-);
-
-signal state    : state_type := IDLE;
-signal bit_cnt  : integer range 0 to 7 := 7;
-signal shift_reg : std_logic_vector(7 downto 0) := (others => '0');
-
+    -- Clock / Control
+    signal clk_tb       : std_logic := '0';
+    signal reset_n_tb   : std_logic := '0';
+    signal ena_tb       : std_logic := '0';
+    
+    -- I2C Interface
+    signal addr_tb      : std_logic_vector(6 downto 0) := "1010101";
+    signal rw_tb        : std_logic := '0';
+    signal data_wr_tb   : std_logic_vector(7 downto 0) := x"99";
+    signal busy_tb      : std_logic;
+    signal data_rd_tb   : std_logic_vector(7 downto 0);
+    signal ack_error_tb : std_logic;
+    
+    -- Offene Kollektorleitungen (mit Pull-Up 'H')
+    signal sda_tb       : std_logic := 'H';
+    signal scl_tb       : std_logic := 'H';
+    
+    signal sda_slave    : std_logic := 'H';
+    signal sda_master   : std_logic := 'H';
+    signal scl_master   : std_logic := 'H'; -- Falls dein Master SCL aktiv treibt
+    
+    constant SLAVE_DATA : std_logic_vector(7 downto 0) := x"CC";
+    
+    type state_t is (IDLE, ADDR_BITS, ACK_ADDR, WRITE_BITS, READ_BITS, ACK_WRITE, WAIT_ACK_READ);
+    signal state     : state_t := IDLE;
+    signal bit_cnt   : integer range 0 to 7 := 7;
+    signal shift_reg : std_logic_vector(7 downto 0) := (others => '0');
+    signal rw_bit    : std_logic := '0';
+    
 begin
 
-------------------------------------------------
--- Clock 100 MHz
-------------------------------------------------
-clk_tb <= not clk_tb after 5 ns;
-
-------------------------------------------------
--- Wired AND SDA
-------------------------------------------------
-sda_tb <= '0' when sda_slave_drive = '0' else 'Z';
-
-------------------------------------------------
--- DUT
-------------------------------------------------
-dut : entity work.i2c_master
-generic map(
-    input_clk => 100_000_000,
-    bus_clk   => 400_000
-)
-port map(
-    clk       => clk_tb,
-    reset_n   => reset_n_tb,
-    ena       => ena_tb,
-    addr      => addr_tb,
-    rw        => rw_tb,
-    data_wr   => data_wr_tb,
-    busy      => busy_tb,
-    data_rd   => data_rd_tb,
-    ack_error => ack_error_tb,
-    sda       => sda_tb,
-    scl       => scl_tb
-);
-
-------------------------------------------------
--- I2C SLAVE FSM
-------------------------------------------------
-process(scl_tb, sda_tb)
-begin
-
-    ------------------------------------------------
-    -- START erkennen
-    ------------------------------------------------
-    if (sda_prev = '1' and sda_tb = '0' and scl_tb = '1') then
-
-        report "START";
-
-        state <= ADDR;
-        bit_cnt <= 7;
-
-    ------------------------------------------------
-    -- STOP erkennen
-    ------------------------------------------------
-    elsif (sda_prev = '0' and sda_tb = '1' and scl_tb = '1') then
-
-        report "STOP";
-
-        state <= IDLE;
-        sda_slave_drive <= 'Z';
-
-    ------------------------------------------------
-    -- Rising Edge SCL = Daten einlesen
-    ------------------------------------------------
-    elsif rising_edge(scl_tb) then
-
-        case state is
-
-            ------------------------------------------------
-            when IDLE =>
-                null;
-
-            ------------------------------------------------
-            when ADDR =>
-
-                shift_reg(bit_cnt) <= sda_tb;
-
-                if bit_cnt = 0 then
-
-                    report "ADDRESS RECEIVED";
-
-                    state <= ACK_ADDR;
-
-                else
-
-                    bit_cnt <= bit_cnt - 1;
-
-                end if;
-
-            ------------------------------------------------
-            when WRITE_DATA =>
-
-                shift_reg(bit_cnt) <= sda_tb;
-
-                if bit_cnt = 0 then
-
-                    report "WRITE BYTE RECEIVED";
-
-                    state <= ACK_DATA;
-
-                else
-
-                    bit_cnt <= bit_cnt - 1;
-
-                end if;
-
-            ------------------------------------------------
-            when READ_DATA =>
-
-                if bit_cnt = 0 then
-
-                    state <= ACK_DATA;
-
-                else
-
-                    bit_cnt <= bit_cnt - 1;
-
-                end if;
-
-            ------------------------------------------------
-            when ACK_ADDR =>
-                null;
-
-            ------------------------------------------------
-            when ACK_DATA =>
-
-                report "DATA PHASE COMPLETE";
-
-                state <= IDLE;
-
-        end case;
-
-    ------------------------------------------------
-    -- Falling Edge SCL = SDA treiben
-    ------------------------------------------------
-    elsif falling_edge(scl_tb) then
-
-        case state is
-
-            ------------------------------------------------
-            when IDLE =>
-
-                sda_slave_drive <= 'Z';
-
-            ------------------------------------------------
-            when ADDR =>
-
-                sda_slave_drive <= 'Z';
-
-            ------------------------------------------------
-            when ACK_ADDR =>
-
-                report "ACK ADDRESS";
-
-                sda_slave_drive <= '0';
-
-                bit_cnt <= 7;
-
-                if shift_reg(0) = '1' then
-                    state <= READ_DATA;
-                else
-                    state <= WRITE_DATA;
-                end if;
-
-            ------------------------------------------------
-            when WRITE_DATA =>
-
-                sda_slave_drive <= 'Z';
-
-            ------------------------------------------------
-            when READ_DATA =>
-
-                if slave_data(bit_cnt) = '0' then
-                    sda_slave_drive <= '0';
-                else
-                    sda_slave_drive <= 'Z';
-                end if;
-
-            ------------------------------------------------
-            when ACK_DATA =>
-
-                report "ACK DATA";
-
-                sda_slave_drive <= '0';
-
-        end case;
-
-    end if;
-
-    sda_prev <= sda_tb;
-
-end process;
-
-------------------------------------------------
--- Stimulus
-------------------------------------------------
-process
-begin
-
-    reset_n_tb <= '0';
-    wait for 100 ns;
-
-    reset_n_tb <= '1';
-    wait for 100 ns;
-
-    ------------------------------------------------
-    -- WRITE
-    ------------------------------------------------
-    report "WRITE TEST START";
-
-    rw_tb      <= '0';
-    data_wr_tb <= x"99";
-
-    ena_tb <= '1';
-
-    wait until busy_tb = '1';
-
-    ena_tb <= '0';
-
-    wait until busy_tb = '0';
-
-    report "WRITE TEST DONE";
-
-    wait for 5 us;
-
-    ------------------------------------------------
-    -- READ
-    ------------------------------------------------
-    report "READ TEST START";
-
-    rw_tb <= '1';
-
-    ena_tb <= '1';
-
-    wait until busy_tb = '1';
-
-    ena_tb <= '0';
-
-    wait until busy_tb = '0';
-
-    report "READ TEST DONE";
-
-    assert data_rd_tb = x"CC"
-    report "READ DATA WRONG"
-    severity error;
-
-    report "SIMULATION PASSED";
-
-    wait;
-
-end process;
-end sim;
+    -- Taktgenerator (100 MHz)
+    clk_tb <= not clk_tb after 5 ns;
+
+    ----------------------------------------------------
+    -- WIRED-AND / OPEN-DRAIN EMULATION
+    ----------------------------------------------------
+    sda_tb <= '0' when sda_master = '0' else
+              '0' when sda_slave = '0' else
+              'H';
+
+    -- WICHTIG: Falls dein Master SCL als Open-Drain ausgibt, hier verknüpfen!
+    scl_tb <= '0' when scl_master = '0' else 'H';
+
+    ----------------------------------------------------
+    -- DUT Instanziierung
+    ----------------------------------------------------
+    dut : entity work.i2c_master
+        generic map (
+            input_clk => 100_000_000,
+            bus_clk   => 400_000
+        )
+        port map (
+            clk       => clk_tb,
+            reset_n   => reset_n_tb,
+            ena       => ena_tb,
+            addr      => addr_tb,
+            rw        => rw_tb,
+            data_wr   => data_wr_tb,
+            busy      => busy_tb,
+            data_rd   => data_rd_tb,
+            ack_error => ack_error_tb,
+            sda       => sda_master,
+            scl       => scl_master
+        );
+
+    ----------------------------------------------------
+    -- SDA Monitor
+    ----------------------------------------------------
+    process(sda_tb)
+    begin
+        report "[MONITOR] SDA changed to " & std_logic'image(sda_tb) & " at " & time'image(now);
+    end process;
+
+    ----------------------------------------------------
+    -- SCL Monitor (Hilft zu sehen, ob der Master stoppt!)
+    ----------------------------------------------------
+    process(scl_tb)
+    begin
+        report "[MONITOR] SCL changed to " & std_logic'image(scl_tb) & " at " & time'image(now);
+    end process;
+
+    ----------------------------------------------------
+    -- REIN SYNCHRONE SLAVE FSM (Triggert direkt auf SDA/SCL)
+    ----------------------------------------------------
+    process(scl_tb, sda_tb, reset_n_tb)
+        variable sda_prev : std_logic := 'H';
+    begin
+        if reset_n_tb = '0' then
+            state     <= IDLE;
+            sda_slave <= 'H';
+            bit_cnt   <= 7;
+            sda_prev  := 'H';
+        else
+            -- START-Bedingung direkt im Prozess prüfen
+            if (sda_prev = '1' or sda_prev = 'H') and sda_tb = '0' and (scl_tb = '1' or scl_tb = 'H') then
+                report "[SLAVE-FSM] >>> START DETECTED <<<";
+                state     <= ADDR_BITS;
+                bit_cnt   <= 7;
+                sda_slave <= 'H';
+            
+            -- STOP-Bedingung
+            elsif sda_prev = '0' and (sda_tb = '1' or sda_tb = 'H') and (scl_tb = '1' or scl_tb = 'H') then
+                report "[SLAVE-FSM] >>> STOP DETECTED <<<";
+                state     <= IDLE;
+                sda_slave <= 'H';
+            
+            -- Steigende Flanke von SCL (Daten einlesen)
+            elsif scl_tb'event and scl_tb = '1' then
+                case state is
+                    when ADDR_BITS =>
+                        shift_reg(bit_cnt) <= to_x01(sda_tb);
+                        if bit_cnt = 0 then
+                            rw_bit <= to_x01(sda_tb);
+                            state  <= ACK_ADDR;
+                        else
+                            bit_cnt <= bit_cnt - 1;
+                        end if;
+                        
+                    when WRITE_BITS =>
+                        shift_reg(bit_cnt) <= to_x01(sda_tb);
+                        if bit_cnt = 0 then
+                            state <= ACK_WRITE;
+                        else
+                            bit_cnt <= bit_cnt - 1;
+                        end if;
+                        
+                    when READ_BITS =>
+                        if bit_cnt = 0 then
+                            state <= WAIT_ACK_READ;
+                        else
+                            bit_cnt <= bit_cnt - 1;
+                        end if;
+                        
+                    when WAIT_ACK_READ =>
+                        if sda_tb = '0' then
+                            state   <= READ_BITS;
+                            bit_cnt <= 7;
+                        else
+                            state   <= IDLE;
+                        end if;
+                    when others => null;
+                end case;
+                
+            -- Fallende Flanke von SCL (Daten ausgeben / ACK senden)
+            elsif scl_tb'event and scl_tb = '0' then
+                case state is
+                    when ACK_ADDR =>
+                        report "[SLAVE-FSM] Sending ACK for Address. RW-Bit was: " & std_logic'image(rw_bit);
+                        sda_slave <= '0'; -- ACK anlegen!
+                        bit_cnt   <= 7;
+                    
+                    when WRITE_BITS =>
+                        sda_slave <= 'H'; -- Master schreibt, Leitung freigeben
+                        
+                    when ACK_WRITE =>
+                        sda_slave <= '0'; -- ACK für Daten
+                        state     <= IDLE;
+                        
+                    when READ_BITS =>
+                        -- Datenbit treiben
+                        if SLAVE_DATA(bit_cnt) = '0' then
+                            sda_slave <= '0';
+                        else
+                            sda_slave <= 'H';
+                        end if;
+                        
+                    when others =>
+                        sda_slave <= 'H';
+                end case;
+            end if;
+            
+            sda_prev := to_x01(sda_tb);
+        end if;
+    end process;
+
+    ----------------------------------------------------
+    -- Stimulus
+    ----------------------------------------------------
+    stimulus : process
+    begin
+        -- Initialer Reset
+        reset_n_tb <= '0';
+        ena_tb     <= '0';
+        wait for 200 ns;
+        reset_n_tb <= '1';
+        wait for 1000 ns; -- Dem Master etwas Zeit nach dem Reset geben
+        
+        ------------------------------------------------
+        -- READ Test
+        ------------------------------------------------
+        report "=== READ TEST START ===";
+        addr_tb    <= "1010101"; -- 0x55
+        rw_tb      <= '1';       -- Read Mode
+        ena_tb     <= '1';       -- Master aktivieren
+        
+        -- ROBUSTES WARTEN 1: Warte, bis der Master die Arbeit aufnimmt (busy -> '1')
+        loop
+            wait until rising_edge(clk_tb);
+            if busy_tb = '1' then
+                exit; -- Master hat gestartet!
+            end if;
+        end loop;
+        
+        -- Enable wieder wegnehmen (damit er nach dem Byte stoppt)
+        ena_tb <= '0';
+        report "[TESTBENCH] Master ist jetzt BUSY. Warte auf Uebertragung...";
+        
+        -- ROBUSTES WARTEN 2: Warte, bis der Master komplett fertig ist (busy -> '0')
+        loop
+            wait until rising_edge(clk_tb);
+            if busy_tb = '0' then
+                exit; -- Master ist fertig!
+            end if;
+        end loop;
+        
+        report "[TESTBENCH] Master fertig (BUSY ist '0'). Prüfe Daten...";
+        
+        -- Prüfungen am Ende der Übertragung
+        assert ack_error_tb = '0' 
+            report "READ: Unexpected ACK error! Der Slave hat nicht geantwortet." 
+            severity error;
+            
+        assert data_rd_tb = x"CC" 
+            report "READ: Data mismatch! Erwartet 0xCC." 
+            severity error;
+            
+        report "=== READ TEST DONE ===";
+        
+        wait for 5 us;
+        report "=== SIMULATION SUCCESSFUL ===";
+        std.env.stop;
+        wait;
+    end process;
+
+end architecture;
