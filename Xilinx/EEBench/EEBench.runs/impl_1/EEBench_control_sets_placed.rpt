@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2024.1 (win64) Build 5076996 Wed May 22 18:37:14 MDT 2024
-| Date         : Tue Jun  2 16:29:29 2026
+| Date         : Wed Jun 10 12:49:59 2026
 | Host         : LKLenovo running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file EEBench_control_sets_placed.rpt
 | Design       : EEBench
@@ -23,11 +23,11 @@ Table of Contents
 +----------------------------------------------------------+-------+
 |                          Status                          | Count |
 +----------------------------------------------------------+-------+
-| Total control sets                                       |   206 |
-|    Minimum number of control sets                        |   206 |
+| Total control sets                                       |   207 |
+|    Minimum number of control sets                        |   207 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |  1164 |
+| Unused register locations in slices containing registers |  1136 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -39,15 +39,15 @@ Table of Contents
 +--------------------+-------+
 |       Fanout       | Count |
 +--------------------+-------+
-| Total control sets |   206 |
+| Total control sets |   207 |
 | >= 0 to < 4        |   126 |
-| >= 4 to < 6        |    56 |
-| >= 6 to < 8        |     2 |
-| >= 8 to < 10       |     1 |
+| >= 4 to < 6        |    50 |
+| >= 6 to < 8        |     5 |
+| >= 8 to < 10       |     7 |
 | >= 10 to < 12      |     0 |
 | >= 12 to < 14      |     1 |
-| >= 14 to < 16      |     1 |
-| >= 16              |    19 |
+| >= 14 to < 16      |     0 |
+| >= 16              |    18 |
 +--------------------+-------+
 * Control sets can be remapped at either synth_design or opt_design
 
@@ -58,12 +58,12 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |             251 |           79 |
-| No           | No                    | Yes                    |             130 |           65 |
-| No           | Yes                   | No                     |             489 |          158 |
-| Yes          | No                    | No                     |              40 |           20 |
-| Yes          | No                    | Yes                    |             942 |          379 |
-| Yes          | Yes                   | No                     |              32 |            8 |
+| No           | No                    | No                     |             232 |           69 |
+| No           | No                    | Yes                    |             130 |           72 |
+| No           | Yes                   | No                     |             462 |          149 |
+| Yes          | No                    | No                     |              48 |           20 |
+| Yes          | No                    | Yes                    |            1016 |          415 |
+| Yes          | Yes                   | No                     |              40 |           10 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
@@ -73,211 +73,212 @@ Table of Contents
 +------------------------------+---------------------------------------------------+-----------------------------------+------------------+----------------+--------------+
 |         Clock Signal         |                   Enable Signal                   |          Set/Reset Signal         | Slice Load Count | Bel Load Count | Bels / Slice |
 +------------------------------+---------------------------------------------------+-----------------------------------+------------------+----------------+--------------+
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_60       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_10       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_24       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_14       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_28       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_25       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_19       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_17       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_3        |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_31       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_1        |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_13       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_11       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_15       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_23       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_29       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_21       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_33       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_27       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_9        |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_5        |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_7        |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_26       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_20       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_12       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_2  |                                                   | uart_unit/rx_mem_reg[14]_3        |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_40       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_43       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_44       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_45       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_46       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_47       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_41       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_42       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_34       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_35       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_37       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_38       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_39       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_36       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_65       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_57       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_64       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_72       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_75       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_80       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_67       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_62       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_82       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_69       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_4        |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_71       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_48       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_55       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_76       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_78       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_50       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_52       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_70       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_79       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_53       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_68       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_73       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_59       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_81       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_63       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_66       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_77       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_49       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_61       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_74       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_83       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_51       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_54       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_56       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_58       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_22       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_16       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_30       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_18       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_2        |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_32       |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_6        |                1 |              1 |         1.00 |
-|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_8        |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_4  |                                                   | uart_unit/rx_mem_reg[14]_5        |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_40 |                                                   | uart_unit/rx_mem_reg[14]_41       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_44 |                                                   | uart_unit/rx_mem_reg[14]_45       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_46 |                                                   | uart_unit/rx_mem_reg[14]_47       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_12 |                                                   | uart_unit/rx_mem_reg[14]_13       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_20 |                                                   | uart_unit/rx_mem_reg[14]_21       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_26 |                                                   | uart_unit/rx_mem_reg[14]_27       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_28 |                                                   | uart_unit/rx_mem_reg[14]_29       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_42 |                                                   | uart_unit/rx_mem_reg[14]_43       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_14 |                                                   | uart_unit/rx_mem_reg[14]_15       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_24 |                                                   | uart_unit/rx_mem_reg[14]_25       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_10 |                                                   | uart_unit/rx_mem_reg[14]_11       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_22 |                                                   | uart_unit/rx_mem_reg[14]_23       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_16 |                                                   | uart_unit/rx_mem_reg[14]_17       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_30 |                                                   | uart_unit/rx_mem_reg[14]_31       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_18 |                                                   | uart_unit/rx_mem_reg[14]_19       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_32 |                                                   | uart_unit/rx_mem_reg[14]_33       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_34 |                                                   | uart_unit/rx_mem_reg[14]_35       |                1 |              1 |         1.00 |
 |  uart_unit/rx_mem_reg[14]_0  |                                                   | uart_unit/rx_mem_reg[14]_1        |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_38 |                                                   | uart_unit/rx_mem_reg[14]_39       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_36 |                                                   | uart_unit/rx_mem_reg[14]_37       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_64 |                                                   | uart_unit/rx_mem_reg[14]_65       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_72 |                                                   | uart_unit/rx_mem_reg[14]_73       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_80 |                                                   | uart_unit/rx_mem_reg[14]_81       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_14 |                                                   | uart_unit/rx_mem_reg[14]_15       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_16 |                                                   | uart_unit/rx_mem_reg[14]_17       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_18 |                                                   | uart_unit/rx_mem_reg[14]_19       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_2  |                                                   | uart_unit/rx_mem_reg[14]_3        |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_12 |                                                   | uart_unit/rx_mem_reg[14]_13       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_10 |                                                   | uart_unit/rx_mem_reg[14]_11       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_78 |                                                   | uart_unit/rx_mem_reg[14]_79       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_68 |                                                   | uart_unit/rx_mem_reg[14]_69       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_24 |                                                   | uart_unit/rx_mem_reg[14]_25       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_40 |                                                   | uart_unit/rx_mem_reg[14]_41       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_42 |                                                   | uart_unit/rx_mem_reg[14]_43       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_4  |                                                   | uart_unit/rx_mem_reg[14]_5        |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_54 |                                                   | uart_unit/rx_mem_reg[14]_55       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_58 |                                                   | uart_unit/rx_mem_reg[14]_59       |                1 |              1 |         1.00 |
 |  uart_unit/rx_mem_reg[14]_62 |                                                   | uart_unit/rx_mem_reg[14]_63       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_82 |                                                   | uart_unit/rx_mem_reg[14]_83       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_44 |                                                   | uart_unit/rx_mem_reg[14]_45       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_32 |                                                   | uart_unit/rx_mem_reg[14]_33       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_26 |                                                   | uart_unit/rx_mem_reg[14]_27       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_50 |                                                   | uart_unit/rx_mem_reg[14]_51       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_64 |                                                   | uart_unit/rx_mem_reg[14]_65       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_70 |                                                   | uart_unit/rx_mem_reg[14]_71       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_52 |                                                   | uart_unit/rx_mem_reg[14]_53       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_76 |                                                   | uart_unit/rx_mem_reg[14]_77       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_20 |                                                   | uart_unit/rx_mem_reg[14]_21       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_22 |                                                   | uart_unit/rx_mem_reg[14]_23       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_56 |                                                   | uart_unit/rx_mem_reg[14]_57       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_34 |                                                   | uart_unit/rx_mem_reg[14]_35       |                1 |              1 |         1.00 |
 |  uart_unit/rx_mem_reg[14]_6  |                                                   | uart_unit/rx_mem_reg[14]_7        |                1 |              1 |         1.00 |
 |  uart_unit/rx_mem_reg[14]_60 |                                                   | uart_unit/rx_mem_reg[14]_61       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_48 |                                                   | uart_unit/rx_mem_reg[14]_49       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_76 |                                                   | uart_unit/rx_mem_reg[14]_77       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_78 |                                                   | uart_unit/rx_mem_reg[14]_79       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_50 |                                                   | uart_unit/rx_mem_reg[14]_51       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_52 |                                                   | uart_unit/rx_mem_reg[14]_53       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_70 |                                                   | uart_unit/rx_mem_reg[14]_71       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_68 |                                                   | uart_unit/rx_mem_reg[14]_69       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_30 |                                                   | uart_unit/rx_mem_reg[14]_31       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_36 |                                                   | uart_unit/rx_mem_reg[14]_37       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_46 |                                                   | uart_unit/rx_mem_reg[14]_47       |                1 |              1 |         1.00 |
 |  uart_unit/rx_mem_reg[14]_66 |                                                   | uart_unit/rx_mem_reg[14]_67       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_8  |                                                   | uart_unit/rx_mem_reg[14]_9        |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_72 |                                                   | uart_unit/rx_mem_reg[14]_73       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_28 |                                                   | uart_unit/rx_mem_reg[14]_29       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_48 |                                                   | uart_unit/rx_mem_reg[14]_49       |                1 |              1 |         1.00 |
 |  uart_unit/rx_mem_reg[14]_74 |                                                   | uart_unit/rx_mem_reg[14]_75       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_54 |                                                   | uart_unit/rx_mem_reg[14]_55       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_56 |                                                   | uart_unit/rx_mem_reg[14]_57       |                1 |              1 |         1.00 |
-|  uart_unit/rx_mem_reg[14]_58 |                                                   | uart_unit/rx_mem_reg[14]_59       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_38 |                                                   | uart_unit/rx_mem_reg[14]_39       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_82 |                                                   | uart_unit/rx_mem_reg[14]_83       |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_8  |                                                   | uart_unit/rx_mem_reg[14]_9        |                1 |              1 |         1.00 |
+|  uart_unit/rx_mem_reg[14]_80 |                                                   | uart_unit/rx_mem_reg[14]_81       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_10       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_24       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_11       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_17       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_19       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_15       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_1        |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_13       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_4        |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_3        |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_21       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_25       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_31       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_5        |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_7        |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_33       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_27       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_23       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_29       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               |                                                   | uart_unit/rx_mem_reg[14]_9        |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_32       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_26       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_20       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_22       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_6        |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_30       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_28       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_8        |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_78       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_68       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_35       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_40       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_42       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_47       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_39       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_51       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_53       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_54       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_57       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_45       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_58       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_62       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_44       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_55       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_67       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_69       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_43       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_50       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_61       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_64       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_70       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_71       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_75       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_73       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_52       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_76       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_77       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_49       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_56       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_34       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_60       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_36       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_41       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_46       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_65       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_66       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_72       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_59       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_48       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_37       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_74       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_63       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_38       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_81       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_79       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_82       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_80       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | sine_unit/val                                     | uart_unit/rx_mem_reg[14]_83       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_14       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_16       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_18       |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_2        |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/rx_mem_reg[14]_12       |                1 |              1 |         1.00 |
 |  CLK_IBUF_BUFG               | tri_unit/flag0                                    | uart_unit/rx_mem_reg[14]_0        |                1 |              2 |         2.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_7  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_6  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_4  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_1                  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_0                  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
 |  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_13 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_6  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_21 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_4  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_10 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_9  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/reset                   |                2 |              4 |         2.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_0  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_10                 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_11                 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_3  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_12                 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_7  | BTN_IBUF[4]                       |                2 |              4 |         2.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_3  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_18 | BTN_IBUF[4]                       |                2 |              4 |         2.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_14 | BTN_IBUF[4]                       |                2 |              4 |         2.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_2                  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_16 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_3                  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_11 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_12 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_10 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_5  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_17 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_9  | BTN_IBUF[4]                       |                2 |              4 |         2.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_15 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_1  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_20 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_15 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_12 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_5  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]    | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_16 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_8                  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_9                  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_4                  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_7                  | BTN_IBUF[4]                       |                2 |              4 |         2.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_5                  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_6                  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
 |  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/s_next                     | BTN_IBUF[4]                       |                2 |              4 |         2.00 |
 |  CLK_IBUF_BUFG               | uart_unit/uart_tx_unit/s_next                     | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | tri_unit/r_reg0                                   | uart_unit/reset                   |                2 |              4 |         2.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]    | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_0  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_7  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_9  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_8  | BTN_IBUF[4]                       |                2 |              4 |         2.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_21 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_19 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_4  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_16 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_8  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_1                  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_10                 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_2                  | BTN_IBUF[4]                       |                2 |              4 |         2.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_4                  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_12                 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_15 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_9  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_5                  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_9                  | BTN_IBUF[4]                       |                2 |              4 |         2.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_17 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_12 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_11                 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_10 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_10 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_17 | BTN_IBUF[4]                       |                3 |              4 |         1.33 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_6  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_13 | BTN_IBUF[4]                       |                2 |              4 |         2.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_3  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_16 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_2  | BTN_IBUF[4]                       |                2 |              4 |         2.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_5  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_7                  | BTN_IBUF[4]                       |                2 |              4 |         2.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_6                  | BTN_IBUF[4]                       |                2 |              4 |         2.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_8                  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_15 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_1  | BTN_IBUF[4]                       |                2 |              4 |         2.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_11 | BTN_IBUF[4]                       |                3 |              4 |         1.33 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_4  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_6  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_12 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_14 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_7  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_3  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_11 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_20 | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_0                  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg_3                  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_5  | BTN_IBUF[4]                       |                1 |              4 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_18 | BTN_IBUF[4]                       |                2 |              4 |         2.00 |
 |  CLK_IBUF_BUFG               | Inst_sevensegDH/dpi0                              |                                   |                4 |              5 |         1.25 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_14 | BTN_IBUF[4]                       |                5 |              5 |         1.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_14 | BTN_IBUF[4]                       |                4 |              5 |         1.25 |
 |  CLK_IBUF_BUFG               | uart_unit/uart_tx_unit/tx_enable_reg              | BTN_IBUF[4]                       |                2 |              5 |         2.50 |
-|  CLK_IBUF_BUFG               | i2c_unit/busy1                                    |                                   |                5 |              7 |         1.40 |
+|  CLK_IBUF_BUFG               |                                                   | sine_unit/phi1/StepIm[30]_i_1_n_0 |                3 |              5 |         1.67 |
+|  CLK_IBUF_BUFG               | i2c_unit/busy1                                    |                                   |                2 |              7 |         3.50 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_11 | BTN_IBUF[4]                       |                4 |              7 |         1.75 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_17 | BTN_IBUF[4]                       |                3 |              7 |         2.33 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_13 | BTN_IBUF[4]                       |                3 |              7 |         2.33 |
 |  CLK_IBUF_BUFG               | uart_unit/uart_tx_unit/b_next                     | BTN_IBUF[4]                       |                2 |              7 |         3.50 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/b_next                     | BTN_IBUF[4]                       |                2 |              8 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/E[0]                       | BTN_IBUF[4]                       |                2 |             12 |         6.00 |
-|  CLK_IBUF_BUFG               |                                                   | sine_unit/phi1/StepIm[30]_i_1_n_0 |                7 |             15 |         2.14 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_tx_unit/tx_enable_reg_0[0]         | BTN_IBUF[4]                       |                2 |             16 |         8.00 |
+|  CLK_IBUF_BUFG               | i2c_unit/addr_rw0                                 |                                   |                3 |              8 |         2.67 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_2  | BTN_IBUF[4]                       |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_19 | BTN_IBUF[4]                       |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[4]_8  | BTN_IBUF[4]                       |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/getCmd.rmAddress_reg[8]_8  | BTN_IBUF[4]                       |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/b_next                     | BTN_IBUF[4]                       |                3 |              8 |         2.67 |
+|  CLK_IBUF_BUFG               | data_wr_sig                                       | addr0                             |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/E[0]                       | BTN_IBUF[4]                       |                4 |             12 |         3.00 |
 |  CLK_IBUF_BUFG               | uart_unit/uart_tx_unit/tx_active_reg[0]           | BTN_IBUF[4]                       |                4 |             16 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_tx_unit/tx_enable_reg_0[0]         | BTN_IBUF[4]                       |                3 |             16 |         5.33 |
 |  CLK_IBUF_BUFG               | uart_unit/iCnt0                                   | BTN_IBUF[4]                       |                4 |             16 |         4.00 |
 |  CLK_IBUF_BUFG               | jCnt0                                             | BTN_IBUF[4]                       |                5 |             17 |         3.40 |
-|  CLK_IBUF_BUFG               |                                                   | i2c_cnt[16]_i_1_n_0               |                5 |             17 |         3.40 |
 |  CLK_IBUF_BUFG               | uart_unit/uart_tx_unit/E[0]                       | BTN_IBUF[4]                       |                4 |             18 |         4.50 |
-|  CLK_IBUF_BUFG               | uart_unit/tx_active_reg_0[0]                      | BTN_IBUF[4]                       |               11 |             20 |         1.82 |
+|  CLK_IBUF_BUFG               | uart_unit/tx_active_reg_0[0]                      | BTN_IBUF[4]                       |               12 |             20 |         1.67 |
 |  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/lut_reg[0]                 |                                   |               11 |             28 |         2.55 |
+|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/b_reg_reg[1]_0[0]          | BTN_IBUF[4]                       |               10 |             32 |         3.20 |
 |  CLK_IBUF_BUFG               | my_adc/drdy_out                                   | BTN_IBUF[4]                       |                8 |             32 |         4.00 |
+|  CLK_IBUF_BUFG               | uart_unit/E[0]                                    | BTN_IBUF[4]                       |               18 |             32 |         1.78 |
 |  CLK_IBUF_BUFG               | sCnt0                                             | uart_unit/tx_active_reg_1         |                8 |             32 |         4.00 |
-|  CLK_IBUF_BUFG               | uart_unit/E[0]                                    | BTN_IBUF[4]                       |               14 |             32 |         2.29 |
-|  CLK_IBUF_BUFG               | uart_unit/uart_rx_unit/b_reg_reg[1]_0[0]          | BTN_IBUF[4]                       |               13 |             32 |         2.46 |
 |  CLK_IBUF_BUFG               | sine_unit/sel                                     | uart_unit/reset                   |                9 |             41 |         4.56 |
-|  CLK_IBUF_BUFG               | sine_unit/currB_Re                                | uart_unit/reset                   |               25 |             66 |         2.64 |
-|  CLK_IBUF_BUFG               |                                                   | BTN_IBUF[4]                       |               36 |             74 |         2.06 |
-|  CLK_IBUF_BUFG               | sine_unit/curr_Re                                 | uart_unit/reset                   |               62 |            144 |         2.32 |
-|  CLK_IBUF_BUFG               | sine_unit/step_Re                                 | uart_unit/reset                   |               70 |            175 |         2.50 |
-|  CLK_IBUF_BUFG               |                                                   |                                   |               79 |            251 |         3.18 |
+|  CLK_IBUF_BUFG               |                                                   | BTN_IBUF[4]                       |               43 |             74 |         1.72 |
+|  CLK_IBUF_BUFG               | sine_unit/curr_Re                                 | uart_unit/reset                   |               52 |            117 |         2.25 |
+|  CLK_IBUF_BUFG               | sine_unit/currB_Re                                | uart_unit/reset                   |               62 |            145 |         2.34 |
+|  CLK_IBUF_BUFG               | sine_unit/step_Re                                 | uart_unit/reset                   |               71 |            172 |         2.42 |
+|  CLK_IBUF_BUFG               |                                                   |                                   |               69 |            232 |         3.36 |
 |  CLK_IBUF_BUFG               |                                                   | uart_unit/reset                   |              116 |            454 |         3.91 |
 +------------------------------+---------------------------------------------------+-----------------------------------+------------------+----------------+--------------+
 

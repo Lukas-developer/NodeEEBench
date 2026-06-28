@@ -35,7 +35,7 @@ entity EEBench is
            LED 			: out  STD_LOGIC_VECTOR (15 downto 0); -- 16 LEDs next to switches 
            JXA 			: in   STD_LOGIC_VECTOR (7 downto 0);  -- Analog Diff Inputs
            JA 			: out  STD_LOGIC_VECTOR (7 downto 2);  -- PMOD lower 8bit DAC
-           JB 			: out  STD_LOGIC_VECTOR (7 downto 0);  -- PMOD lower 8bit DAC
+           JB 			: out  STD_LOGIC_VECTOR (7 downto 2);  -- PMOD lower 8bit DAC
            JC 			: out  STD_LOGIC_VECTOR (7 downto 0);  -- PMOD upper 8bit DAC
            SSEG_CA 		: out  STD_LOGIC_VECTOR (7 downto 0);  -- 7 segment + dp
            SSEG_AN 		: out  STD_LOGIC_VECTOR (3 downto 0);   -- 4 digits 
@@ -239,18 +239,18 @@ signal dpX: STD_LOGIC_VECTOR(3 DOWNTO 0);
 signal ena_sig      : std_logic;
 signal addr_sig     : std_logic_vector(6 downto 0) := "1100000";
 signal rw_sig       : std_logic := '0';
-signal data_wr_sig  : std_logic_vector(7 downto 0) := x"55";
+signal data_wr_sig  : std_logic_vector(7 downto 0) := x"58";
 signal data_rd_sig  : std_logic_vector(7 downto 0);
 signal busy_sig     : std_logic;
 signal ack_err_sig  : std_logic;
 signal reset_n_sig  : std_logic;
 type i2c_state_type is (
-    idle,
-    send_byte1,
-    wait_byte1,
-    send_byte2,
-    wait_byte2,
-    done
+    IDLE,
+    WAIT_CMD,
+    SEND_HIGH,
+    WAIT_HIGH,
+    SEND_LOW,
+    WAIT_LOW
 );
 signal i2c_state : i2c_state_type := idle;
 signal i2c_tick      : std_logic := '0';
@@ -259,6 +259,10 @@ signal dac_value : unsigned(11 downto 0) := to_unsigned(2048,12);
 
 signal mcp_byte1 : std_logic_vector(7 downto 0) := x"08";
 signal mcp_byte2 : std_logic_vector(7 downto 0) := x"00";
+
+signal mcp_cmd       : std_logic_vector(7 downto 0);
+signal mcp_data_high : std_logic_vector(7 downto 0);
+signal mcp_data_low  : std_logic_vector(7 downto 0);
 
 
 -- Register Memory for UART
@@ -395,7 +399,7 @@ with rMem(13) select -- lookup table data or not
                dout01 when '1',
                "0000000000000000" when others;
 
-JB <= mywaveX(7 downto 0);  			 			 
+JB <= mywaveX(7 downto 2);  			 			 
 JC <= mywaveX(15 downto 8);		
 
 				 			 
@@ -615,106 +619,97 @@ i2c_unit: i2c_master
       sda => SDA,
       scl => SCL
    );
-   process(CLK)
+   -- 1. Kontinuierliche Zuweisung des Sinus-Signals an die DAC-Datenbytes
+    -- Wir nehmen die relevanten 12 Bit aus mysine (analog zu deinem JB/JC Multiplexer)
+   process(mysine)
+      variable dac_12bit : std_logic_vector(11 downto 0);
    begin
-      if rising_edge(CLK) then
+       -- Wir greifen die oberen 12 Bit des Sinus ab (analog zu deinem JB/JC Konstrukt)
+       dac_12bit := mysine(30 downto 19); 
+    
+       -- 1. Das Command-Byte für Fast Write auf Kanal A
+       mcp_cmd       <= "01011000"; -- Festgelegt vom Datenblatt (0x58)
+    
+       -- 2. Das High-Datenbyte: Die oberen 4 Bits des Sinus (Vorangestellt mit 4 Nullen)
+       mcp_data_high <= "0000" & dac_12bit(11 downto 8);
+    
+       -- 3. Das Low-Datenbyte: Die unteren 8 Bits des Sinus
+       mcp_data_low  <= dac_12bit(7 downto 0);
+    end process;
 
-         if i2c_cnt = 99999 then
-             i2c_cnt  <= 0;
-             i2c_tick <= '1';
-         else
-             i2c_cnt  <= i2c_cnt + 1;
-             i2c_tick <= '0';
-          end if;
-
-      end if;
-   end process;
+    -- 2. Takt-Teiler für die Sende-Frequenz (i2c_tick)
+    process(CLK)
+    begin
+       if rising_edge(CLK) then
+          if i2c_cnt = 99999 then  -- Bestimmt, wie oft der I2C-Wert aktualisiert wird
+              i2c_cnt  <= 0;
+              i2c_tick <= '1';
+          else
+              i2c_cnt  <= i2c_cnt + 1;
+              i2c_tick <= '0';
+           end if;
+       end if;
+    end process;
    
-   process(CLK)
+    -- 3. Die korrigierte State Machine (Handshake mit busy_sig)
+    process(CLK)
     begin
         if rising_edge(CLK) then
+            if reset_n_sig = '0' then
+                i2c_state <= IDLE;
+                ena_sig <= '0';
+            else
+                case i2c_state is
 
-            case i2c_state is
+                    when IDLE =>
+                        ena_sig <= '0';
+                        -- Hier einen Timer einbauen oder direkt starten, wenn Master frei ist und der Ticker 1 ist
+                        if busy_sig = '0' and i2c_tick = '1' then
+                            -- Adresse laden (0x60)
+                            addr_sig <= "1100000"; 
+                            rw_sig   <= '0'; -- Schreiben
+                        
+                            -- Ersten Befehl anlegen & Master starten
+                            data_wr_sig   <= mcp_cmd; 
+                            ena_sig       <= '1';
+                            i2c_state <= WAIT_CMD;
+                        end if;
 
-                ------------------------------------------------
-                when idle =>
+                    when WAIT_CMD =>
+                        -- Warten, bis der Master die Übertragung registriert hat und busy wird
+                        if busy_sig = '1' then
+                            i2c_state <= SEND_HIGH;
+                        end if;
 
-                   ena_sig <= '0';
+                    when SEND_HIGH =>
+                        -- Nächstes Byte anlegen. Wichtig: ena_sig bleibt '1', 
+                        -- damit der Master nach dem ACK ohne STOP-Bit weiterzieht!
+                        data_wr_sig   <= mcp_data_high;
+                        i2c_state <= WAIT_HIGH;
 
-                   if i2c_tick = '1' then
+                    when WAIT_HIGH =>
+                        -- Der Digi-Key-Master zieht busy kurz auf '0', wenn er ein Byte fertig hat
+                        if busy_sig = '0' then 
+                            i2c_state <= SEND_LOW;
+                        end if;
 
-                      data_wr_sig <= mcp_byte1;
+                    when SEND_LOW =>
+                        -- Letztes Byte anlegen
+                        data_wr_sig   <= mcp_data_low;
+                        -- WICHTIG: Jetzt ena weglatschen, damit der Master danach ein STOP-Signal erzeugt!
+                        ena_sig       <= '0'; 
+                        i2c_state <= WAIT_LOW;
 
-                      i2c_state <= send_byte1;
+                    when WAIT_LOW =>
+                        -- Warten, bis das gesamte I2C-Paket auf der Hardware übertragen wurde
+                        if busy_sig = '0' then
+                            i2c_state <= IDLE; -- Zurück zum Anfang für den nächsten Sinus-Punkt
+                        end if;
 
-                end if;
-                --when idle =>
-
-                --    ena_sig <= '0';
-
-                --    if i2c_tick = '1' then
-                --       i2c_state <= start;
-                --    end if;
-
-              ------------------------------------------------
-                when send_byte1 =>
-
-                   ena_sig <= '1';
-
-                   if busy_sig = '1' then
-
-                      ena_sig <= '0';
-
-                      i2c_state <= wait_byte1;
-
-                   end if;
-                     
-                when wait_byte1 =>
-
-                   data_wr_sig <= mcp_byte2;
-
-                   ena_sig <= '1';
-
-                   i2c_state <= send_byte2;
-                   
-                when send_byte2 =>
-
-                   if busy_sig = '1' then
-
-                      ena_sig <= '0';
-
-                      i2c_state <= wait_byte2;
-
-                   end if;
-                   
-                when wait_byte2 =>
-
-                   if busy_sig = '0' then
-
-                      i2c_state <= done;
-
-                   end if;
-                --when start =>
-
-                --    ena_sig <= '1';
-
-                -- warten bis I2C wirklich startet
-                --    if busy_sig = '1' then
-                --        ena_sig <= '0';
-                --        i2c_state <= done;
-                --    end if;
-
-            ------------------------------------------------
-                when done =>
-
-                -- warten bis Transfer fertig
-                    if busy_sig = '0' then
-                        i2c_state <= idle;
-                    end if;
-
-            end case;
-
-
+                    when others =>
+                        i2c_state <= IDLE;
+                end case;
+            end if;
         end if;
     end process;
    

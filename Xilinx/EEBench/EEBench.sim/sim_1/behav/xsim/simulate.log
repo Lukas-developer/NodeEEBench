@@ -1,0 +1,152 @@
+Time resolution is 1 ps
+Note: [MONITOR] SCL changed to 'H' at 0 ps
+Time: 0 ps  Iteration: 0  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SDA changed to 'H' at 0 ps
+Time: 0 ps  Iteration: 0  Process: /i2c_master_tb/line__81  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: === READ TEST START ===
+Time: 1200 ns  Iteration: 0  Process: /i2c_master_tb/stimulus  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [TESTBENCH] Master ist jetzt BUSY. Warte auf Uebertragung...
+Time: 3315 ns  Iteration: 0  Process: /i2c_master_tb/stimulus  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SDA changed to '0' at 4545000 ps
+Time: 4545 ns  Iteration: 4  Process: /i2c_master_tb/line__81  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [SLAVE-FSM] >>> VALID START DETECTED <<<
+Time: 4545 ns  Iteration: 5  Process: /i2c_master_tb/line__126  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to '0' at 5155000 ps
+Time: 5155 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [SLAVE-FSM] >>> VALID START DETECTED <<<
+Time: 5155 ns  Iteration: 3  Process: /i2c_master_tb/line__126  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SDA changed to 'H' at 5785000 ps
+Time: 5785 ns  Iteration: 4  Process: /i2c_master_tb/line__81  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to 'H' at 6395000 ps
+Time: 6395 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [SLAVE-FSM] Bit 7 received: 'H'
+Time: 6395 ns  Iteration: 3  Process: /i2c_master_tb/line__126  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to '0' at 7645000 ps
+Time: 7645 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SDA changed to '0' at 8275000 ps
+Time: 8275 ns  Iteration: 4  Process: /i2c_master_tb/line__81  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to 'H' at 8885000 ps
+Time: 8885 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [SLAVE-FSM] Bit 6 received: '0'
+Time: 8885 ns  Iteration: 3  Process: /i2c_master_tb/line__126  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to '0' at 10135000 ps
+Time: 10135 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SDA changed to 'H' at 10765000 ps
+Time: 10765 ns  Iteration: 4  Process: /i2c_master_tb/line__81  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to 'H' at 11375000 ps
+Time: 11375 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [SLAVE-FSM] Bit 5 received: 'H'
+Time: 11375 ns  Iteration: 3  Process: /i2c_master_tb/line__126  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to '0' at 12625000 ps
+Time: 12625 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SDA changed to '0' at 13255000 ps
+Time: 13255 ns  Iteration: 4  Process: /i2c_master_tb/line__81  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to 'H' at 13865000 ps
+Time: 13865 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [SLAVE-FSM] Bit 4 received: '0'
+Time: 13865 ns  Iteration: 3  Process: /i2c_master_tb/line__126  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to '0' at 15115000 ps
+Time: 15115 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SDA changed to 'H' at 15745000 ps
+Time: 15745 ns  Iteration: 4  Process: /i2c_master_tb/line__81  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to 'H' at 16355000 ps
+Time: 16355 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [SLAVE-FSM] Bit 3 received: 'H'
+Time: 16355 ns  Iteration: 3  Process: /i2c_master_tb/line__126  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to '0' at 17605000 ps
+Time: 17605 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SDA changed to '0' at 18235000 ps
+Time: 18235 ns  Iteration: 4  Process: /i2c_master_tb/line__81  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to 'H' at 18845000 ps
+Time: 18845 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [SLAVE-FSM] Bit 2 received: '0'
+Time: 18845 ns  Iteration: 3  Process: /i2c_master_tb/line__126  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to '0' at 20095000 ps
+Time: 20095 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SDA changed to 'H' at 20725000 ps
+Time: 20725 ns  Iteration: 4  Process: /i2c_master_tb/line__81  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to 'H' at 21335000 ps
+Time: 21335 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [SLAVE-FSM] Bit 1 received: 'H'
+Time: 21335 ns  Iteration: 3  Process: /i2c_master_tb/line__126  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to '0' at 22585000 ps
+Time: 22585 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to 'H' at 23825000 ps
+Time: 23825 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [SLAVE-FSM] Bit 0 received: 'H'
+Time: 23825 ns  Iteration: 3  Process: /i2c_master_tb/line__126  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to '0' at 25075000 ps
+Time: 25075 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [SLAVE-FSM] Sending ACK for Address. RW-Bit is: '1'
+Time: 25075 ns  Iteration: 3  Process: /i2c_master_tb/line__126  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SDA changed to '0' at 25075000 ps
+Time: 25075 ns  Iteration: 5  Process: /i2c_master_tb/line__81  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to 'H' at 26315000 ps
+Time: 26315 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to '0' at 27565000 ps
+Time: 27565 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SDA changed to 'H' at 27565000 ps
+Time: 27565 ns  Iteration: 5  Process: /i2c_master_tb/line__81  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to 'H' at 28805000 ps
+Time: 28805 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to '0' at 30055000 ps
+Time: 30055 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SDA changed to '0' at 30055000 ps
+Time: 30055 ns  Iteration: 5  Process: /i2c_master_tb/line__81  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to 'H' at 31295000 ps
+Time: 31295 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to '0' at 32545000 ps
+Time: 32545 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to 'H' at 33785000 ps
+Time: 33785 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to '0' at 35035000 ps
+Time: 35035 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SDA changed to 'H' at 35035000 ps
+Time: 35035 ns  Iteration: 5  Process: /i2c_master_tb/line__81  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to 'H' at 36275000 ps
+Time: 36275 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to '0' at 37525000 ps
+Time: 37525 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to 'H' at 38765000 ps
+Time: 38765 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to '0' at 40015000 ps
+Time: 40015 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SDA changed to '0' at 40015000 ps
+Time: 40015 ns  Iteration: 5  Process: /i2c_master_tb/line__81  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to 'H' at 41255000 ps
+Time: 41255 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to '0' at 42505000 ps
+Time: 42505 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to 'H' at 43745000 ps
+Time: 43745 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to '0' at 44995000 ps
+Time: 44995 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SDA changed to 'H' at 44995000 ps
+Time: 44995 ns  Iteration: 5  Process: /i2c_master_tb/line__81  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to 'H' at 46235000 ps
+Time: 46235 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to '0' at 47485000 ps
+Time: 47485 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to 'H' at 48725000 ps
+Time: 48725 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to '0' at 49975000 ps
+Time: 49975 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SDA changed to '0' at 50605000 ps
+Time: 50605 ns  Iteration: 4  Process: /i2c_master_tb/line__81  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SCL changed to 'H' at 51215000 ps
+Time: 51215 ns  Iteration: 3  Process: /i2c_master_tb/line__89  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [MONITOR] SDA changed to 'H' at 51855000 ps
+Time: 51855 ns  Iteration: 4  Process: /i2c_master_tb/line__81  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [SLAVE-FSM] >>> STOP DETECTED <<<
+Time: 51855 ns  Iteration: 5  Process: /i2c_master_tb/line__126  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: [TESTBENCH] Master fertig (BUSY ist '0'). Prüfe Daten...
+Time: 53105 ns  Iteration: 0  Process: /i2c_master_tb/stimulus  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Error: READ: Unexpected ACK error! Der Slave hat nicht geantwortet.
+Time: 53105 ns  Iteration: 0  Process: /i2c_master_tb/stimulus  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Error: READ: Data mismatch! Erwartet 0xCC.
+Time: 53105 ns  Iteration: 0  Process: /i2c_master_tb/stimulus  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: === READ TEST DONE ===
+Time: 53105 ns  Iteration: 0  Process: /i2c_master_tb/stimulus  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+Note: === SIMULATION SUCCESSFUL ===
+Time: 58105 ns  Iteration: 0  Process: /i2c_master_tb/stimulus  File: C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd
+$stop called at time : 58105 ns : File "C:/Users/lukas/GitHub-Repositories/NodeEEBench/Xilinx/EEBench/EEBench.srcs/sim_1/new/tb_i2c.vhd" Line 262

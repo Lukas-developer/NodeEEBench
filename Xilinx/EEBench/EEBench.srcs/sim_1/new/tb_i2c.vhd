@@ -12,7 +12,7 @@ architecture sim of i2c_master_tb is
     signal ena_tb       : std_logic := '0';
     
     -- I2C Interface
-    signal addr_tb      : std_logic_vector(6 downto 0) := "1010101";
+    signal addr_tb      : std_logic_vector(6 downto 0) := "1100000";
     signal rw_tb        : std_logic := '0';
     signal data_wr_tb   : std_logic_vector(7 downto 0) := x"99";
     signal busy_tb      : std_logic;
@@ -34,6 +34,9 @@ architecture sim of i2c_master_tb is
     signal bit_cnt   : integer range 0 to 7 := 7;
     signal shift_reg : std_logic_vector(7 downto 0) := (others => '0');
     signal rw_bit    : std_logic := '0';
+    
+    signal start_detected  : std_logic ;
+    signal stop_detected   : std_logic ;
     
 begin
 
@@ -88,100 +91,119 @@ begin
         report "[MONITOR] SCL changed to " & std_logic'image(scl_tb) & " at " & time'image(now);
     end process;
 
+    
     ----------------------------------------------------
-    -- REIN SYNCHRONE SLAVE FSM (Triggert direkt auf SDA/SCL)
+    -- 1. Separater, robuster START/STOP Detektor
     ----------------------------------------------------
-    process(scl_tb, sda_tb, reset_n_tb)
-        variable sda_prev : std_logic := 'H';
+    process(sda_tb, reset_n_tb)
+    begin
+        if reset_n_tb = '0' then
+            start_detected <= '0';
+            stop_detected  <= '0';
+        else
+            -- START: SDA fällt, während SCL HIGH ist
+            -- Wichtig: Nur im IDLE erlauben, um Fehltrigger während ACKs zu verhindern
+            if falling_edge(sda_tb) and (scl_tb = '1' or scl_tb = 'H') then
+                if state = IDLE then
+                    start_detected <= '1';
+                end if;
+            else
+                start_detected <= '0';
+            end if;
+
+            -- STOP: SDA steigt, während SCL HIGH ist
+            if rising_edge(sda_tb) and (scl_tb = '1' or scl_tb = 'H') then
+                stop_detected <= '1';
+            else
+                stop_detected <= '0';
+            end if;
+        end if;
+    end process;
+
+    ----------------------------------------------------
+    -- 2. Rein synchrone, flankengesteuerte Slave FSM
+    ----------------------------------------------------
+    process(scl_tb, reset_n_tb, start_detected, stop_detected)
     begin
         if reset_n_tb = '0' then
             state     <= IDLE;
             sda_slave <= 'H';
             bit_cnt   <= 7;
-            sda_prev  := 'H';
+            shift_reg <= (others => '0');
+            rw_bit    <= '0';
         else
-            -- START-Bedingung direkt im Prozess prüfen
-            if (sda_prev = '1' or sda_prev = 'H') and sda_tb = '0' and (scl_tb = '1' or scl_tb = 'H') then
-                report "[SLAVE-FSM] >>> START DETECTED <<<";
+            -- Asynchrone Strukturänderungen durch START / STOP
+            if start_detected = '1' then
+                report "[SLAVE-FSM] >>> VALID START DETECTED <<<";
                 state     <= ADDR_BITS;
                 bit_cnt   <= 7;
                 sda_slave <= 'H';
-            
-            -- STOP-Bedingung
-            elsif sda_prev = '0' and (sda_tb = '1' or sda_tb = 'H') and (scl_tb = '1' or scl_tb = 'H') then
+            elsif stop_detected = '1' then
                 report "[SLAVE-FSM] >>> STOP DETECTED <<<";
                 state     <= IDLE;
                 sda_slave <= 'H';
             
-            -- Steigende Flanke von SCL (Daten einlesen)
-            elsif scl_tb'event and scl_tb = '1' then
+            -- Synchrone Verarbeitung bei SCL-Flanken
+            elsif rising_edge(scl_tb) then
                 case state is
                     when ADDR_BITS =>
                         shift_reg(bit_cnt) <= to_x01(sda_tb);
+                        report "[SLAVE-FSM] Bit " & integer'image(bit_cnt) & " received: " & std_logic'image(sda_tb);
                         if bit_cnt = 0 then
                             rw_bit <= to_x01(sda_tb);
                             state  <= ACK_ADDR;
                         else
                             bit_cnt <= bit_cnt - 1;
                         end if;
-                        
-                    when WRITE_BITS =>
-                        shift_reg(bit_cnt) <= to_x01(sda_tb);
-                        if bit_cnt = 0 then
-                            state <= ACK_WRITE;
-                        else
-                            bit_cnt <= bit_cnt - 1;
-                        end if;
-                        
+
                     when READ_BITS =>
                         if bit_cnt = 0 then
                             state <= WAIT_ACK_READ;
                         else
                             bit_cnt <= bit_cnt - 1;
                         end if;
-                        
+
                     when WAIT_ACK_READ =>
+                        -- Master sendet ACK ('0') oder NACK ('1'/'H')
                         if sda_tb = '0' then
                             state   <= READ_BITS;
                             bit_cnt <= 7;
                         else
                             state   <= IDLE;
                         end if;
+
                     when others => null;
                 end case;
-                
-            -- Fallende Flanke von SCL (Daten ausgeben / ACK senden)
-            elsif scl_tb'event and scl_tb = '0' then
+
+            elsif falling_edge(scl_tb) then
                 case state is
                     when ACK_ADDR =>
-                        report "[SLAVE-FSM] Sending ACK for Address. RW-Bit was: " & std_logic'image(rw_bit);
-                        sda_slave <= '0'; -- ACK anlegen!
+                        report "[SLAVE-FSM] Sending ACK for Address. RW-Bit is: " & std_logic'image(rw_bit);
+                        sda_slave <= '0'; -- ACK stabil ausgeben
                         bit_cnt   <= 7;
-                    
-                    when WRITE_BITS =>
-                        sda_slave <= 'H'; -- Master schreibt, Leitung freigeben
-                        
-                    when ACK_WRITE =>
-                        sda_slave <= '0'; -- ACK für Daten
-                        state     <= IDLE;
-                        
+                        if rw_bit = '1' then
+                            state <= READ_BITS;
+                        else
+                            state <= IDLE; -- Falls Write (hier ungenutzt)
+                        end if;
+
                     when READ_BITS =>
-                        -- Datenbit treiben
+                        -- Hier treibt der Slave die Datenleitung bitweise mit x"CC"
                         if SLAVE_DATA(bit_cnt) = '0' then
                             sda_slave <= '0';
                         else
                             sda_slave <= 'H';
                         end if;
-                        
+
+                    when WAIT_ACK_READ =>
+                        sda_slave <= 'H'; -- Leitung freigeben, damit der Master ACK senden kann
+
                     when others =>
                         sda_slave <= 'H';
                 end case;
             end if;
-            
-            sda_prev := to_x01(sda_tb);
         end if;
     end process;
-
     ----------------------------------------------------
     -- Stimulus
     ----------------------------------------------------
